@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const quizData = [
   { question: "Planet manakah yang ukurannya paling besar?", options: ["Bumi", "Jupiter", "Merkurius"], answer: "Jupiter" },

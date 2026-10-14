@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import {useState, useEffect } from 'react';
 import { motion } from 'framer-motion'; // <-- AnimatePresence sudah dihapus agar tidak error TS6133
 import { savePlayerScore, getLeaderboard } from '../backend_mock/api';
 import { planetsData } from '../data/planet';

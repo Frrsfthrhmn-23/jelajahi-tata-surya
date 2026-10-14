@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Definisi Tipe Item
@@ -245,4 +245,4 @@ export default function SpaceCanvas({ onClose }: { onClose: () => void }) {
       </div>
     </div>
   );
-}
+}   
