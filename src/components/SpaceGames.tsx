@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion'; // <-- AnimatePresence sudah dihapus agar tidak error TS6133
 import { savePlayerScore, getLeaderboard } from '../backend_mock/api';
 import { planetsData } from '../data/planet';
 
@@ -41,7 +41,7 @@ export default function SpaceGames({ onClose }: { onClose: () => void }) {
     setActiveGame('MENU');
   };
 
-  // ================= FUNGSI HELPER: BOLA PLANET 3D (SUDAH DIPERBAIKI) =================
+  // ================= FUNGSI HELPER: BOLA PLANET 3D =================
   const render3DPlanet = (planet: any, sizeClass: string, isShadow = false) => {
     return (
       <motion.div 
@@ -78,7 +78,8 @@ export default function SpaceGames({ onClose }: { onClose: () => void }) {
   const [asteroidPos, setAsteroidPos] = useState({ top: '20%', left: '50%' });
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    // NodeJS.Timeout diganti jadi ReturnType<typeof setInterval> agar lulus sensor TS
+    let timer: ReturnType<typeof setInterval>; 
     if (activeGame === 'ASTEROID' && timeLeft > 0 && !showLeaderboard) {
       timer = setInterval(() => setTimeLeft(t => t - 1), 1000);
     }
@@ -118,7 +119,8 @@ export default function SpaceGames({ onClose }: { onClose: () => void }) {
   };
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    // NodeJS.Timeout diganti jadi ReturnType<typeof setInterval>
+    let timer: ReturnType<typeof setInterval>; 
     if (activeGame === 'MEMORY' && memoryTime > 0 && matched.length < cards.length && !showLeaderboard) {
       timer = setInterval(() => setMemoryTime(t => t - 1), 1000);
     }
@@ -149,7 +151,8 @@ export default function SpaceGames({ onClose }: { onClose: () => void }) {
   const [rocketFinished, setRocketFinished] = useState(false);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    // NodeJS.Timeout diganti jadi ReturnType<typeof setInterval>
+    let timer: ReturnType<typeof setInterval>; 
     if (rocketStarted && rocketTime > 0 && fuel < 100 && !isFlying && !showLeaderboard) {
       timer = setInterval(() => setRocketTime(t => t - 1), 1000);
     } else if (rocketTime === 0 && !isFlying) {
@@ -224,7 +227,7 @@ export default function SpaceGames({ onClose }: { onClose: () => void }) {
     }
   };
 
-  // ================= KOMPONEN UI RENDER BUKAN COMPONENT (SUDAH DIPERBAIKI) =================
+  // ================= KOMPONEN UI =================
   const renderLeaderboardView = (gameName: string) => (
     <div className="text-center w-full max-w-md mx-auto mt-4">
       <h3 className="text-3xl font-black text-yellow-400 mb-2">🏆 Papan Peringkat</h3>
@@ -272,19 +275,15 @@ export default function SpaceGames({ onClose }: { onClose: () => void }) {
       <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
       <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="relative bg-indigo-950 border-4 border-cyan-400 rounded-3xl w-full max-w-4xl h-[85vh] overflow-hidden flex flex-col shadow-[0_0_50px_rgba(34,211,238,0.3)]">
         
-        {/* HEADER BAR */}
         <div className="bg-cyan-900/50 p-4 flex justify-between items-center border-b border-cyan-500/50 z-20">
           <h2 className="text-xl md:text-2xl font-black text-cyan-300">🕹️ ARCADE TATA SURYA</h2>
           <button onClick={onClose} className="text-white hover:text-red-400 font-bold bg-white/10 px-4 py-1 rounded-full transition-colors">TUTUP</button>
         </div>
 
-        {/* CONTENT AREA */}
         <div className="flex-1 p-4 md:p-6 relative overflow-y-auto flex flex-col items-center hide-scrollbar">
           
-          {/* MENU UTAMA */}
           {activeGame === 'MENU' && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl mt-4">
-              
               <div className="bg-gradient-to-br from-red-600 to-orange-600 p-4 rounded-2xl border border-white/20 shadow-lg flex flex-col justify-between">
                 <div onClick={() => { setActiveGame('ASTEROID'); setScore(0); setTimeLeft(15); setShowLeaderboard(false); }} className="cursor-pointer hover:scale-105 transition-transform flex-1 text-left pb-4">
                   <div className="text-4xl mb-2">☄️</div><h3 className="text-xl font-black text-white">Hancurkan Asteroid</h3>
@@ -320,14 +319,11 @@ export default function SpaceGames({ onClose }: { onClose: () => void }) {
                   🏆 Lihat Papan Skor
                 </button>
               </div>
-
             </div>
           )}
 
-          {/* VIEW: LEADERBOARD DARI MENU */}
           {activeGame === 'LEADERBOARD_MENU' && renderLeaderboardView(viewLeaderboardTitle)}
 
-          {/* GAME 1: ASTEROID */}
           {activeGame === 'ASTEROID' && (
             <div className="h-full w-full relative">
               {!showLeaderboard ? (
@@ -343,7 +339,6 @@ export default function SpaceGames({ onClose }: { onClose: () => void }) {
             </div>
           )}
 
-          {/* GAME 2: MEMORY */}
           {activeGame === 'MEMORY' && (
             <div className="w-full flex flex-col items-center">
               {!showLeaderboard ? (
@@ -389,7 +384,6 @@ export default function SpaceGames({ onClose }: { onClose: () => void }) {
             </div>
           )}
 
-          {/* GAME 3: ROKET */}
           {activeGame === 'ROCKET' && (
             <div className="w-full flex flex-col items-center justify-center h-full text-center relative overflow-hidden min-h-[50vh]">
               {!showLeaderboard ? (
@@ -428,7 +422,6 @@ export default function SpaceGames({ onClose }: { onClose: () => void }) {
             </div>
           )}
 
-          {/* GAME 4: SHADOW (PLANET MISTERI) */}
           {activeGame === 'SHADOW' && shadowQuestions.length > 0 && (
             <div className="w-full flex flex-col items-center justify-center h-full">
               {!showLeaderboard ? (
