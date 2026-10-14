@@ -1,21 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { planetsData, sunData } from './data/planet';
 import Quiz from './components/Quiz';
 import CosmicTools from './components/CosmicTools';
 import SpaceGames from './components/SpaceGames'; 
 import SpaceCanvas from './components/SpaceCanvas';
+import LandingPage from './components/LandingPage'; // <-- Import Landing Page
 
 export default function App() {
+  // ================= STATE UNTUK PENJAGA PINTU =================
+  const [explorerName, setExplorerName] = useState(() => {
+    return localStorage.getItem('explorerName') || '';
+  });
+
+  // ================= STATE BAWAAN APLIKASI =================
   const [selectedPlanet, setSelectedPlanet] = useState<any>(null);
   const [isQuizOpen, setIsQuizOpen] = useState(false);
   const [isArcadeOpen, setIsArcadeOpen] = useState(false);
-  const [isCanvasOpen, setIsCanvasOpen] = useState(false); // State untuk Diorama Canva
+  const [isCanvasOpen, setIsCanvasOpen] = useState(false);
   const [earthWeight, setEarthWeight] = useState<number | ''>(''); 
   
   const [scrollX, setScrollX] = useState(0);
   const [stars, setStars] = useState<any[]>([]);
   const [constellations, setConstellations] = useState<any[]>([]);
+
+  // ================= FUNGSI LOGIN / LOGOUT =================
+  const handleStartAdventure = (name: string) => {
+    setExplorerName(name);
+    localStorage.setItem('explorerName', name);
+  };
+
+  const handleGantiNama = () => {
+    setExplorerName('');
+    localStorage.removeItem('explorerName');
+  };
 
   useEffect(() => {
     // Generate Bintang
@@ -67,9 +85,31 @@ export default function App() {
     }
   };
 
+  // ================= LOGIKA PENJAGA PINTU =================
+  if (!explorerName) {
+    return <LandingPage onStart={handleStartAdventure} />;
+  }
+
+  // ================= RENDER APLIKASI UTAMA =================
   return (
     <div className="min-h-screen bg-[#05050c] text-white font-sans relative overflow-hidden flex flex-col">
       <style>{`.hide-scrollbar::-webkit-scrollbar { display: none; } .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }`}</style>
+
+      {/* 🚀 ID CARD KAPTEN DI POJOK KIRI ATAS 🚀 */}
+      <div className="absolute top-4 left-4 z-40 bg-indigo-950/80 backdrop-blur-sm border-2 border-cyan-400 px-5 py-2 rounded-full shadow-[0_0_20px_rgba(34,211,238,0.4)] flex items-center gap-3">
+        <span className="text-2xl animate-bounce">🧑‍🚀</span>
+        <div className="flex flex-col">
+          <span className="text-[10px] text-cyan-200 uppercase tracking-widest font-black leading-none">Kapten Pesawat</span>
+          <span className="font-black text-cyan-400 text-lg leading-none capitalize">{explorerName}</span>
+        </div>
+      </div>
+
+      {/* 🔄 TOMBOL GANTI NAMA DI POJOK KANAN ATAS 🔄 */}
+      <div className="absolute top-4 right-4 z-40">
+        <button onClick={handleGantiNama} className="bg-red-500/20 hover:bg-red-500/50 border border-red-500 text-red-200 px-4 py-2 rounded-full text-xs font-bold transition-all backdrop-blur-sm">
+          Ganti Pemain
+        </button>
+      </div>
 
       {/* ================= BACKGROUND: GALAKSI ================= */}
       <div className="absolute inset-0 pointer-events-none z-0 transition-transform duration-100 ease-out" style={{ transform: `translateX(-${scrollX * 0.05}px)` }}>
@@ -129,8 +169,8 @@ export default function App() {
         </motion.div>
       ))}
 
-      {/* HEADER NAVBAR SUPER LENGKAP */}
-      <nav className="flex justify-between items-center p-6 mx-4 mt-4 bg-white/5 backdrop-blur-lg rounded-full border border-white/10 shadow-2xl relative z-30">
+      {/* HEADER NAVBAR SUPER LENGKAP (Diturunkan margin-top ke mt-20 agar tidak bertabrakan dengan ID Card) */}
+      <nav className="flex justify-between items-center p-6 mx-4 mt-20 bg-white/5 backdrop-blur-lg rounded-full border border-white/10 shadow-2xl relative z-30">
         <div className="flex items-center gap-3">
           <span className="text-3xl">🚀</span>
           <h1 className="text-xl md:text-3xl font-extrabold tracking-wide text-yellow-300 drop-shadow-md">SOLAR SYSTEM</h1>
