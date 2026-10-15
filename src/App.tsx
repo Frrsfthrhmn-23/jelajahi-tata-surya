@@ -95,18 +95,18 @@ export default function App() {
     <div className="min-h-screen bg-[#05050c] text-white font-sans relative overflow-hidden flex flex-col">
       <style>{`.hide-scrollbar::-webkit-scrollbar { display: none; } .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }`}</style>
 
-      {/* 🚀 ID CARD KAPTEN DI POJOK KIRI ATAS 🚀 */}
-      <div className="absolute top-4 left-4 z-40 bg-indigo-950/80 backdrop-blur-sm border-2 border-cyan-400 px-5 py-2 rounded-full shadow-[0_0_20px_rgba(34,211,238,0.4)] flex items-center gap-3">
-        <span className="text-2xl animate-bounce">🧑‍🚀</span>
-        <div className="flex flex-col">
-          <span className="text-[10px] text-cyan-200 uppercase tracking-widest font-black leading-none">Kapten Pesawat</span>
-          <span className="font-black text-cyan-400 text-lg leading-none capitalize">{explorerName}</span>
+{/* 🚀 ID CARD KAPTEN DI POJOK KIRI ATAS 🚀 */}
+      <div className="absolute top-4 left-3 md:left-4 z-40 bg-indigo-950/80 backdrop-blur-sm border-2 border-cyan-400 px-3 md:px-5 py-1.5 md:py-2 rounded-full shadow-[0_0_20px_rgba(34,211,238,0.4)] flex items-center gap-2 max-w-[55vw] md:max-w-none">
+        <span className="text-lg md:text-2xl animate-bounce">🧑‍🚀</span>
+        <div className="flex flex-col truncate">
+          <span className="text-[8px] md:text-[10px] text-cyan-200 uppercase tracking-widest font-black leading-none">Kapten</span>
+          <span className="font-black text-cyan-400 text-sm md:text-lg leading-none capitalize truncate">{explorerName}</span>
         </div>
       </div>
 
       {/* 🔄 TOMBOL GANTI NAMA DI POJOK KANAN ATAS 🔄 */}
-      <div className="absolute top-4 right-4 z-40">
-        <button onClick={handleGantiNama} className="bg-red-500/20 hover:bg-red-500/50 border border-red-500 text-red-200 px-4 py-2 rounded-full text-xs font-bold transition-all backdrop-blur-sm">
+      <div className="absolute top-4 right-3 md:right-4 z-40">
+        <button onClick={handleGantiNama} className="bg-red-500/20 hover:bg-red-500/50 border border-red-500 text-red-200 px-3 md:px-4 py-2 md:py-2 rounded-full text-[10px] md:text-xs font-bold transition-all backdrop-blur-sm">
           Ganti Pemain
         </button>
       </div>
@@ -169,22 +169,22 @@ export default function App() {
         </motion.div>
       ))}
 
-      {/* HEADER NAVBAR SUPER LENGKAP (Diturunkan margin-top ke mt-20 agar tidak bertabrakan dengan ID Card) */}
-      <nav className="flex justify-between items-center p-6 mx-4 mt-20 bg-white/5 backdrop-blur-lg rounded-full border border-white/10 shadow-2xl relative z-30">
-        <div className="flex items-center gap-3">
-          <span className="text-3xl">🚀</span>
-          <h1 className="text-xl md:text-3xl font-extrabold tracking-wide text-yellow-300 drop-shadow-md">SOLAR SYSTEM</h1>
+      {/* HEADER NAVBAR SUPER LENGKAP (SUDAH DIPERBAIKI UNTUK MOBILE) */}
+      <nav className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0 p-4 md:p-6 mx-3 md:mx-4 mt-20 md:mt-24 bg-white/5 backdrop-blur-lg rounded-3xl md:rounded-full border border-white/10 shadow-2xl relative z-30">
+        <div className="flex items-center gap-2 md:gap-3">
+          <span className="text-2xl md:text-3xl">🚀</span>
+          <h1 className="text-2xl md:text-3xl font-extrabold tracking-wide text-yellow-300 drop-shadow-md text-center">SOLAR SYSTEM</h1>
         </div>
         
-        {/* INI DIA 3 TOMBOL SAKTI ANDA */}
-        <div className="flex gap-2 md:gap-3">
-          <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => setIsCanvasOpen(true)} className="bg-gradient-to-r from-pink-500 to-orange-500 px-3 md:px-5 py-2 md:py-3 rounded-full font-black text-white shadow-lg border border-pink-300/50 flex items-center gap-2">
+        {/* TOMBOL SAKTI: Dibikin flex-wrap dan flex-1 di HP agar merata dan tidak keluar dari layar */}
+        <div className="flex flex-wrap justify-center gap-2 md:gap-3 w-full md:w-auto">
+          <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => setIsCanvasOpen(true)} className="flex-1 md:flex-none flex justify-center items-center gap-2 bg-gradient-to-r from-pink-500 to-orange-500 px-2 md:px-5 py-2.5 md:py-3 rounded-xl md:rounded-full font-black text-white shadow-lg border border-pink-300/50 text-[13px] md:text-base min-w-[100px]">
             Diorama 🎨
           </motion.button>
-          <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => setIsArcadeOpen(true)} className="bg-gradient-to-r from-teal-500 to-cyan-600 px-3 md:px-5 py-2 md:py-3 rounded-full font-black text-white shadow-lg border border-cyan-300/50 flex items-center gap-2">
+          <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => setIsArcadeOpen(true)} className="flex-1 md:flex-none flex justify-center items-center gap-2 bg-gradient-to-r from-teal-500 to-cyan-600 px-2 md:px-5 py-2.5 md:py-3 rounded-xl md:rounded-full font-black text-white shadow-lg border border-cyan-300/50 text-[13px] md:text-base min-w-[100px]">
             Arcade 🕹️
           </motion.button>
-          <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => setIsQuizOpen(true)} className="bg-gradient-to-r from-indigo-500 to-purple-600 px-3 md:px-5 py-2 md:py-3 rounded-full font-black text-white shadow-lg border border-indigo-300/50 flex items-center gap-2">
+          <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => setIsQuizOpen(true)} className="flex-1 md:flex-none flex justify-center items-center gap-2 bg-gradient-to-r from-indigo-500 to-purple-600 px-2 md:px-5 py-2.5 md:py-3 rounded-xl md:rounded-full font-black text-white shadow-lg border border-indigo-300/50 text-[13px] md:text-base min-w-[100px]">
             Kuis 📝
           </motion.button>
         </div>
